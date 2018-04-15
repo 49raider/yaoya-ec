@@ -1,0 +1,107 @@
+body {
+}
+
+h1,h2,h3,h4,h5,h6,p {
+  padding: 10px 0;
+  margin: 0;
+}
+
+header {
+  /*background-colorプロパティを削除*/
+  margin-top: 10px;
+}
+
+.title {
+  color: green;
+}
+
+.navbar {
+  float: right;
+}
+
+.contents {
+  /*background-colorプロパティを削除*/
+  margin: 10px auto;
+  width:960px;
+}
+
+.left-content {
+  height:100px;
+  width: 100px;
+  float: left;
+  background-color: red;
+  padding: 10px;
+}
+
+.mid-content {
+  height:100px;
+  width: 100px;
+  float: left;
+  background-color: green;
+  padding: 10px;
+}
+
+.right-content {
+  height: 100px;
+  width: 100px;
+  float: left;
+  padding: 10px;
+  background-color: blue;
+}
+
+footer {
+  /*background-colorプロパティを削除*/
+  /*heightプロパティを削除*/
+  text-align: center;
+}
+
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.heading-sentence {
+  font-size: 18px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul li {
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  font-size: 20px;
+}
+
+td {
+  margin: 0;
+  padding-left: 10px;
+  line-height: 30px;
+}
+
+.stylist-image {
+  height: 100px;
+  width: 100px;
+}
+
+.stylist-name {
+  font-size: 16px;
+  text-align: center;
+}
+
+a {
+  color: red;
+}
+
+a:hover {
+  color: blue;
+}
+
+/* .fa .fa-shopping-cart{
+  font-size: 25px;
+} */

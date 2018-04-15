@@ -1,0 +1,126 @@
+<p id=""><%= notice %></p>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
+    <title>E-Commerce</title>
+  </head>
+
+<body>
+  <header>
+    <div>
+      <h2 class="title">E-Commerce</h2>
+      <!-- ログインしている場合 -->
+      <% if user_signed_in? %>
+      <h10><%=  current_user.email %> <span>さんでログイン中</span></h10>
+      <!-- ログインしていない場合 -->
+      <% else %>
+      <h10>登録されていないユーザー</h10>
+      <% end %>
+    </div>
+
+    <div class="navbar">
+      <% if user_signed_in? %>
+      <!-- ログインしている場合 -->
+        <ul>
+          <li>
+          <!-- 検索機能 -->
+            <%= form_tag(search_items_path, method: :get) do %>
+              <p>
+                <%= text_field_tag :search, params[:search], placeholder: '商品名を入力'%>
+                <%= submit_tag "検索"%></p>
+            <% end %>
+
+          </li>
+          <li><%= link_to(content_tag(:i, '買い物かご', class: 'fa fa-shopping-cart'),'/cart_item/index', method: :get) %></li>
+          <li><%= link_to(content_tag(:i, 'ログアウト', class: 'fa fa-sign-out'),destroy_user_session_path,method: :delete) %></li>
+        </ul>
+      <!-- ログインしていない場合 -->
+        <% else %>
+        <ul>
+          <li>検索</li>
+          <li><%= link_to(content_tag(:i, 'ログイン', class: 'fa fa-sign-in'),new_user_session_path) %></li>
+        </ul>
+        <% end %>
+    </div>
+  </header>
+
+  <div class="contents clearfix">
+      <div class="left-content">
+      </div>
+      <div class="mid-content">
+      </div>
+      <div class="right-content">
+      </div>
+  </div>
+
+
+  <table>
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>商品画像</th>
+      <th>価格</th>
+      <th>詳細</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+  <% if user_signed_in? %>
+    <% if current_user.id == 1 then%><!--  ログインユーザが管理者かどうか -->
+
+    <% @items.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= image_tag(item.image_url) %></td>
+      <td><%= item.price %></td>
+      <td><%= item.detail %></td>
+      <td><%= link_to '詳細', item %></td>
+      <td><%= link_to '編集', edit_item_path(item) %></td>
+      <td><%= link_to '削除', item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= form_for @cart_item do |f| %>
+        <%= f.hidden_field :item_id, value: item.id %>
+        <%= f.hidden_field :cart_id, value: current_user.id  %>
+        <%= f.number_field :number ,placeholder: '個数を選択'%>
+        <%= f.submit "買い物かごに追加" %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %><!--  items.eachのend -->
+
+    <% else %><!-- 管理者じゃない場合-->
+
+    <% @items.each do |item| %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= image_tag(item.image_url) %></td>
+      <td><%= item.price %></td>
+      <td><%= item.detail %></td>
+      <td><%= link_to '詳細', item %></td>
+      <td><%= form_for @cart_item do |f| %>
+        <%= f.hidden_field :item_id, value: item.id %>
+        <%= f.hidden_field :cart_id, value: current_user.id  %>
+        <%= f.number_field :number ,placeholder: '個数を選択'%>
+        <%= f.submit "買い物かごに追加" %>
+        <% end %>
+      </td>
+    </tr>
+    <% end %><!--  items.eachのend -->
+
+    <% end %><!-- ここまでログインしているユーザーの場合-->
+
+  <% else %><!-- ログインしていない場合-->
+
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= image_tag(item.image_url) %></td>
+        <td><%= item.price %></td>
+        <td><%= item.detail %></td>
+        <td><%= link_to '詳細', item %></td>
+      </tr>
+    <% end %><!--  items.eachのend -->
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,46 @@
+<p id=""><%= notice %></p>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css">
+    <title>E-Commerce</title>
+  </head>
+
+<body>
+  <header>
+    <div>
+      <h2 class="title">E-Commerce</h2>
+      <!-- ログインしている場合 -->
+      <% if user_signed_in? %>
+      <h10><%=  current_user.email %> <span>さんの買い物かご</span></h10>
+      <!-- ログインしていない場合 -->
+      <% else %>
+      <h10>登録されていないユーザー</h10>
+      <% end %>
+    </div>
+  </header>
+
+  <table>
+  <thead>
+    <tr>
+      <th>商品名</th>
+      <th>商品画像</th>
+      <th>価格</th>
+      <th>詳細</th>
+      <th>個数</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= image_tag(item.image_url) %></td>
+        <td><%= item.price %></td>
+        <td><%= item.detail %></td>
+        <td><%= @cart_items.find_by(item_id: item.id).number %></td>
+      </tr>
+    <% end %><!--  items.eachのend -->
+  </tbody>
+</table>
