@@ -18,10 +18,17 @@ class ItemsController < ApplicationController
   end
 
   def search
-    # 検索フォームのキーワードをあいまい検索して、itemテーブルから20件の作品情報を取得する
-    @items = Item.where('name LIKE(?)', "%#{params[:search]}%").limit(20)
-    @cart_item = CartItem.new
+    @items = Item.where('name LIKE(?)', "%#{params[:keyword]}%") #paramsとして送られてきたkeyword（入力された語句）で、Userモデルのnameカラムを検索し、その結果を@usersに代入する
+    respond_to do |format|
+      format.json { render 'index', json: @items } #json形式のデータを受け取ったら、@usersをデータとして返す そしてindexをrenderで表示する
+    end
   end
+
+  # def search
+  #   # 検索フォームのキーワードをあいまい検索して、itemテーブルから20件の作品情報を取得する
+  #   @items = Item.where('name LIKE(?)', "%#{params[:search]}%").limit(20)
+  #   @cart_item = CartItem.new
+  # end
 
   # GET /items/1/edit
   def edit

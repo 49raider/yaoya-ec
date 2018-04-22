@@ -23,15 +23,22 @@
       <% if user_signed_in? %>
       <!-- ログインしている場合 -->
         <ul>
-          <li>
           <!-- 検索機能 -->
+<!--           <li>
             <%= form_tag(search_items_path, method: :get) do %>
               <p>
                 <%= text_field_tag :search, params[:search], placeholder: '商品名を入力'%>
                 <%= submit_tag "検索"%></p>
             <% end %>
+          </li> -->
 
+          <!-- インクリメンタルサーチ -->
+          <li>
+            <input type=form id="form" placeholder="商品名を入力してください" style="width: 200px;"/>
+            <ul class="search-result" id="result">
+            </ul>
           </li>
+
           <li><%= link_to(content_tag(:i, '買い物かご', class: 'fa fa-shopping-cart'),cart_items_path, method: :get) %></li>
           <li><%= link_to(content_tag(:i, 'ログアウト', class: 'fa fa-sign-out'),destroy_user_session_path,method: :delete) %></li>
         </ul>
